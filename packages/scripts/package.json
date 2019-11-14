@@ -44,6 +44,7 @@
 		"command-exists": "^1.2.8",
 		"cross-spawn": "^5.1.0",
 		"decompress-zip": "^0.2.2",
+		"dir-glob": "^3.0.1",
 		"eslint": "^6.1.0",
 		"jest": "^24.7.1",
 		"jest-puppeteer": "^4.3.0",
