@@ -6,13 +6,11 @@ import { useSelect } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-
+import BlockMover from '../block-mover';
+import BlockSwitcher from '../block-switcher';
 import BlockControls from '../block-controls';
 import BlockFormatControls from '../block-format-controls';
 import BlockSettingsMenu from '../block-settings-menu';
-import BlockSwitcher from '../block-switcher';
-import MultiBlocksSwitcher from '../block-switcher/multi-blocks-switcher';
-import BlockMover from '../block-mover';
 
 export default function BlockToolbar( { moverDirection } ) {
 	const { blockClientIds, isValid, mode } = useSelect( ( select ) => {
@@ -37,19 +35,8 @@ export default function BlockToolbar( { moverDirection } ) {
 	if ( blockClientIds.length === 0 ) {
 		return null;
 	}
-
-	if ( blockClientIds.length > 1 ) {
-		return (
-			<div className="block-editor-block-toolbar">
-				<BlockMover
-					clientIds={ blockClientIds }
-					__experimentalOrientation={ moverDirection }
-				/>
-				<MultiBlocksSwitcher />
-				<BlockSettingsMenu clientIds={ blockClientIds } />
-			</div>
-		);
-	}
+	const shouldShowVisualToolbar = isValid && mode === 'visual';
+	const isMultiToolbar = blockClientIds.length > 1;
 
 	return (
 		<div className="block-editor-block-toolbar">
@@ -57,9 +44,9 @@ export default function BlockToolbar( { moverDirection } ) {
 				clientIds={ blockClientIds }
 				__experimentalOrientation={ moverDirection }
 			/>
-			{ mode === 'visual' && isValid && (
+			{ ( shouldShowVisualToolbar || isMultiToolbar ) && <BlockSwitcher clientIds={ blockClientIds } /> }
+			{ shouldShowVisualToolbar && ! isMultiToolbar && (
 				<>
-					<BlockSwitcher clientIds={ blockClientIds } />
 					<BlockControls.Slot bubblesVirtually className="block-editor-block-toolbar__slot" />
 					<BlockFormatControls.Slot bubblesVirtually className="block-editor-block-toolbar__slot" />
 				</>
