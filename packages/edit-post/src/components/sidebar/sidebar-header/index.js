@@ -18,7 +18,7 @@ import shortcuts from '../../../keyboard-shortcuts';
 
 const SidebarHeader = ( { children, className, closeLabel, closeSidebar, title } ) => {
 	return (
-		<>
+		<div className="edit-post-sidebar-header__container">
 			<div className="components-panel__header edit-post-sidebar-header__small">
 				<span className="edit-post-sidebar-header__title">
 					{ title || __( '(no title)' ) }
@@ -38,7 +38,7 @@ const SidebarHeader = ( { children, className, closeLabel, closeSidebar, title }
 					shortcut={ shortcuts.toggleSidebar }
 				/>
 			</div>
-		</>
+		</div>
 	);
 };
 
