@@ -195,6 +195,12 @@ function register_block_core_navigation() {
 				'customTextColor'    => array(
 					'type' => 'string',
 				),
+				'backgroundColor'          => array(
+					'type' => 'string',
+				),
+				'customBackgroundColor'    => array(
+					'type' => 'string',
+				),
 				'fontSize'           => array(
 					'type' => 'string',
 				),
