@@ -57,7 +57,7 @@ export const searchItems = ( items, categories, searchTerm ) => {
 		return items;
 	}
 
-	return items.filter( ( { title, category, keywords = [] } ) => {
+	return items.filter( ( { title, category, keywords = [], patterns = [] } ) => {
 		let unmatchedTerms = removeMatchingTerms(
 			normalizedTerms,
 			title
@@ -79,6 +79,15 @@ export const searchItems = ( items, categories, searchTerm ) => {
 		unmatchedTerms = removeMatchingTerms(
 			unmatchedTerms,
 			get( find( categories, { slug: category } ), [ 'title' ] ),
+		);
+
+		if ( unmatchedTerms.length === 0 ) {
+			return true;
+		}
+
+		unmatchedTerms = removeMatchingTerms(
+			unmatchedTerms,
+			patterns.map( ( { label } ) => label ).join( ' ' ),
 		);
 
 		return unmatchedTerms.length === 0;
