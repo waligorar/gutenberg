@@ -7,7 +7,7 @@ import { omit } from 'lodash';
 /**
  * WordPress dependencies
  */
-import { RawHTML, Platform, useRef } from '@wordpress/element';
+import { RawHTML, Platform, useRef, useCallback } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { pasteHandler, children as childrenSource, getBlockTransforms, findTransform, isUnmodifiedDefaultBlock } from '@wordpress/blocks';
 import { useInstanceId } from '@wordpress/compose';
@@ -191,11 +191,78 @@ function RichTextWrapper( {
 		) );
 	}
 
-	function onSelectionChange( start, end ) {
+	const onSelectionChange = useCallback( ( start, end ) => {
 		selectionChange( clientId, identifier, start, end );
-	}
+	}, [ clientId, identifier ] );
 
-	function onEnter( { value, onChange, shiftKey } ) {
+	const onDelete = useCallback( ( { value, isReverse } ) => {
+		if ( onMerge ) {
+			onMerge( ! isReverse );
+		}
+
+		// Only handle remove on Backspace. This serves dual-purpose of being
+		// an intentional user interaction distinguishing between Backspace and
+		// Delete to remove the empty field, but also to avoid merge & remove
+		// causing destruction of two fields (merge, then removed merged).
+		if ( onRemove && isEmpty( value ) && isReverse ) {
+			onRemove( ! isReverse );
+		}
+	}, [ onMerge, onRemove ] );
+
+	/**
+	 * Signals to the RichText owner that the block can be replaced with two
+	 * blocks as a result of splitting the block by pressing enter, or with
+	 * blocks as a result of splitting the block by pasting block content in the
+	 * instance.
+	 *
+	 * @param  {Object} record       The rich text value to split.
+	 * @param  {Array}  pastedBlocks The pasted blocks to insert, if any.
+	 */
+	const splitValue = useCallback( ( record, pastedBlocks = [] ) => {
+		if ( ! onReplace || ! onSplit ) {
+			return;
+		}
+
+		const blocks = [];
+		const [ before, after ] = split( record );
+		const hasPastedBlocks = pastedBlocks.length > 0;
+
+		// Create a block with the content before the caret if there's no pasted
+		// blocks, or if there are pasted blocks and the value is not empty.
+		// We do not want a leading empty block on paste, but we do if split
+		// with e.g. the enter key.
+		if ( ! hasPastedBlocks || ! isEmpty( before ) ) {
+			blocks.push( onSplit( toHTMLString( {
+				value: before,
+				multilineTag,
+			} ) ) );
+		}
+
+		if ( hasPastedBlocks ) {
+			blocks.push( ...pastedBlocks );
+		} else if ( onSplitMiddle ) {
+			blocks.push( onSplitMiddle() );
+		}
+
+		// If there's pasted blocks, append a block with the content after the
+		// caret. Otherwise, do append and empty block if there is no
+		// `onSplitMiddle` prop, but if there is and the content is empty, the
+		// middle block is enough to set focus in.
+		if ( hasPastedBlocks || ! onSplitMiddle || ! isEmpty( after ) ) {
+			blocks.push( onSplit( toHTMLString( {
+				value: after,
+				multilineTag,
+			} ) ) );
+		}
+
+		// If there are pasted blocks, set the selection to the last one.
+		// Otherwise, set the selection to the second block.
+		const indexToSelect = hasPastedBlocks ? blocks.length - 1 : 1;
+
+		onReplace( blocks, indexToSelect );
+	}, [ onReplace, onSplit, multilineTag, onSplitMiddle ] );
+
+	const onEnter = useCallback( ( { value, onChange, shiftKey } ) => {
 		const canSplit = onReplace && onSplit;
 
 		if ( onReplace ) {
@@ -226,23 +293,22 @@ function RichTextWrapper( {
 		} else {
 			splitValue( value );
 		}
-	}
+	}, [
+		onReplace,
+		onSplit,
+		__unstableMarkAutomaticChange,
+		multiline,
+		splitValue,
+	] );
 
-	function onDelete( { value, isReverse } ) {
-		if ( onMerge ) {
-			onMerge( ! isReverse );
-		}
-
-		// Only handle remove on Backspace. This serves dual-purpose of being
-		// an intentional user interaction distinguishing between Backspace and
-		// Delete to remove the empty field, but also to avoid merge & remove
-		// causing destruction of two fields (merge, then removed merged).
-		if ( onRemove && isEmpty( value ) && isReverse ) {
-			onRemove( ! isReverse );
-		}
-	}
-
-	function onPaste( { value, onChange, html, plainText, files, activeFormats } ) {
+	const onPaste = useCallback( ( {
+		value,
+		onChange,
+		html,
+		plainText,
+		files,
+		activeFormats,
+	} ) => {
 		// Only process file if no HTML is present.
 		// Note: a pasted file may have the URL as plain text.
 		if ( files && files.length && ! html ) {
@@ -312,62 +378,17 @@ function RichTextWrapper( {
 				splitValue( value, content );
 			}
 		}
-	}
+	}, [
+		tagName,
+		onReplace,
+		onSplit,
+		splitValue,
+		__unstableEmbedURLOnPaste,
+		canUserUseUnfilteredHTML,
+		multiline,
+	] );
 
-	/**
-	 * Signals to the RichText owner that the block can be replaced with two
-	 * blocks as a result of splitting the block by pressing enter, or with
-	 * blocks as a result of splitting the block by pasting block content in the
-	 * instance.
-	 *
-	 * @param  {Object} record       The rich text value to split.
-	 * @param  {Array}  pastedBlocks The pasted blocks to insert, if any.
-	 */
-	function splitValue( record, pastedBlocks = [] ) {
-		if ( ! onReplace || ! onSplit ) {
-			return;
-		}
-
-		const blocks = [];
-		const [ before, after ] = split( record );
-		const hasPastedBlocks = pastedBlocks.length > 0;
-
-		// Create a block with the content before the caret if there's no pasted
-		// blocks, or if there are pasted blocks and the value is not empty.
-		// We do not want a leading empty block on paste, but we do if split
-		// with e.g. the enter key.
-		if ( ! hasPastedBlocks || ! isEmpty( before ) ) {
-			blocks.push( onSplit( toHTMLString( {
-				value: before,
-				multilineTag,
-			} ) ) );
-		}
-
-		if ( hasPastedBlocks ) {
-			blocks.push( ...pastedBlocks );
-		} else if ( onSplitMiddle ) {
-			blocks.push( onSplitMiddle() );
-		}
-
-		// If there's pasted blocks, append a block with the content after the
-		// caret. Otherwise, do append and empty block if there is no
-		// `onSplitMiddle` prop, but if there is and the content is empty, the
-		// middle block is enough to set focus in.
-		if ( hasPastedBlocks || ! onSplitMiddle || ! isEmpty( after ) ) {
-			blocks.push( onSplit( toHTMLString( {
-				value: after,
-				multilineTag,
-			} ) ) );
-		}
-
-		// If there are pasted blocks, set the selection to the last one.
-		// Otherwise, set the selection to the second block.
-		const indexToSelect = hasPastedBlocks ? blocks.length - 1 : 1;
-
-		onReplace( blocks, indexToSelect );
-	}
-
-	function inputRule( value, valueToFormat ) {
+	const inputRule = useCallback( ( value, valueToFormat ) => {
 		if ( ! onReplace ) {
 			return;
 		}
@@ -396,7 +417,7 @@ function RichTextWrapper( {
 
 		onReplace( [ block ] );
 		__unstableMarkAutomaticChange();
-	}
+	}, [ onReplace, __unstableMarkAutomaticChange ] );
 
 	const content = (
 		<RichText
