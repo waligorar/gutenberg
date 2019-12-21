@@ -103,6 +103,9 @@ function RichTextWrapper( {
 	...experimentalProps
 } ) {
 	const instanceId = useInstanceId( RichTextWrapper );
+
+	identifier = identifier || instanceId;
+
 	const ref = useRef();
 	const {
 		clientId,
@@ -168,7 +171,7 @@ function RichTextWrapper( {
 		didAutomaticChange,
 		disabled,
 		shouldBlurOnUnmount,
-	} = useSelect( selector, [ clientId, instanceId, identifier, originalIsSelected ] );
+	} = useSelect( selector, [ clientId, identifier, originalIsSelected ] );
 	const {
 		__unstableMarkLastChangeAsPersistent,
 		enterFormattedText,
