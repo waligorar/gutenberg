@@ -91,7 +91,7 @@ function RichTextWrapper( {
 	onRemove,
 	onMerge,
 	onSplit,
-	onSplitMiddle,
+	__unstableOnSplitMiddle: onSplitMiddle,
 	identifier,
 	// To do: find a better way to implicitly inherit props.
 	start: startAttr,
@@ -99,8 +99,7 @@ function RichTextWrapper( {
 	style,
 	preserveWhiteSpace,
 	__unstableEmbedURLOnPaste,
-	// From experimental filter. To do: pick props instead.
-	...experimentalProps
+	...props
 } ) {
 	const instanceId = useInstanceId( RichTextWrapper );
 
@@ -427,7 +426,9 @@ function RichTextWrapper( {
 
 	const content = (
 		<RichText
-			{ ...experimentalProps }
+			{ ...props }
+			clientId={ clientId }
+			identifier={ identifier }
 			ref={ ref }
 			value={ adjustedValue }
 			onChange={ adjustedOnChange }
