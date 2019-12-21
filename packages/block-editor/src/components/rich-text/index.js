@@ -162,6 +162,9 @@ function RichTextWrapper( {
 			...extraProps,
 		};
 	};
+	// This selector must run on every render so the right selection state is
+	// retreived from the store on merge.
+	// To do: fix this somehow.
 	const {
 		canUserUseUnfilteredHTML,
 		isCaretWithinFormattedText,
@@ -171,7 +174,7 @@ function RichTextWrapper( {
 		didAutomaticChange,
 		disabled,
 		shouldBlurOnUnmount,
-	} = useSelect( selector, [ clientId, identifier, originalIsSelected ] );
+	} = useSelect( selector );
 	const {
 		__unstableMarkLastChangeAsPersistent,
 		enterFormattedText,
