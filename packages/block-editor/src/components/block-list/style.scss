@@ -108,7 +108,7 @@
 	}
 
 	// Navigate mode & Focused wrapper.
-	&:focus > .block-editor-block-list__block-edit > [data-block] {
+	&:focus:not(.is-reusable) > .block-editor-block-list__block-edit > [data-block] {
 		@include button-style__focus-active;
 	}
 
@@ -384,7 +384,7 @@
 	height: $block-padding + 8px;
 
 	// Show a clickable plus.
-	.block-editor-inserter__toggle {
+	.block-editor-inserter__toggle.has-icon {
 		border-radius: 50%;
 		color: $blue-medium-focus;
 		background: $white;
@@ -580,6 +580,7 @@
 	.components-popover__content {
 		margin-left: 0 !important;
 		min-width: auto;
+		width: max-content;
 		background: none;
 		border: none;
 		box-shadow: none;
