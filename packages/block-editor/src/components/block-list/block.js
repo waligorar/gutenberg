@@ -267,11 +267,6 @@ function BlockListBlock( {
 	// If the block is selected and we're typing the block should not appear.
 	// Empty paragraph blocks should always show up as unselected.
 	const showEmptyBlockSideInserter = ! isNavigationMode && ( isSelected || isLast ) && isEmptyDefaultBlock && isValid;
-	const shouldAppearSelected =
-		! isFocusMode &&
-		! showEmptyBlockSideInserter &&
-		isSelected &&
-		! isTypingWithinBlock;
 	const shouldShowBreadcrumb = isNavigationMode && isSelected;
 	const shouldShowContextualToolbar =
 		! isNavigationMode &&
@@ -301,7 +296,7 @@ function BlockListBlock( {
 		{
 			'has-selected-ui': hasSelectedUI,
 			'has-warning': ! isValid || !! hasError || isUnregisteredBlock,
-			'is-selected': shouldAppearSelected && hasSelectedUI,
+			'is-selected': isSelected,
 			'is-navigate-mode': isNavigationMode,
 			'is-multi-selected': isMultiSelected,
 			'is-reusable': isReusableBlock( blockType ),
