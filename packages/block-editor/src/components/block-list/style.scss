@@ -1,4 +1,4 @@
-.block-editor-block-list__layout .block-editor-block-list__block.is-selected { // Needs specificity to override inherited styles.
+.block-editor-block-list__layout .block-editor-block-list__block { // Needs specificity to override inherited styles.
 	// While block is being dragged, dim the slot dragged from, and hide some UI.
 	&.is-dragging {
 		.block-editor-block-list__block-edit::before {
@@ -107,20 +107,13 @@
 		}
 	}
 
-	// Selected style.
-	&.is-selected {
-		> .block-editor-block-list__block-edit::before {
-			// Use opacity to work in various editor styles.
-			border-color: $border-color;
+	// Navigate mode & Focused wrapper.
+	&:focus > .block-editor-block-list__block-edit > [data-block] {
+		@include button-style__focus-active;
+	}
 
-			.is-dark-theme & {
-				border-color: $light-opacity-light-800;
-			}
-		}
-
-		&.is-navigate-mode > .block-editor-block-list__block-edit::before {
-			border-color: $blue-medium-focus;
-		}
+	&.is-navigate-mode.is-selected > .block-editor-block-list__block-edit::before {
+		border-color: $theme-color;
 	}
 
 	// Spotlight mode.
@@ -206,14 +199,6 @@
 		}
 	}
 
-	&.has-warning.is-selected .block-editor-block-list__block-edit::before {
-		border-color: $border-color;
-
-		.is-dark-theme & {
-			border-color: $light-opacity-light-800;
-		}
-	}
-
 	&.has-warning .block-editor-block-list__block-edit::after {
 		content: "";
 		position: absolute;
@@ -230,18 +215,21 @@
 		background-color: transparent;
 	}
 
-	&.has-warning.is-selected .block-editor-block-list__block-edit::after {
-		bottom: ( $block-toolbar-height - $block-padding - $border-width );
-
-		@include break-small() {
-			bottom: -$block-padding;
-		}
-	}
-
 	// Reusable blocks.
-	&.is-reusable.is-selected > .block-editor-block-list__block-edit::before {
-		border-style: dashed;
-		border-width: $border-width;
+	&.is-reusable.is-selected:not(.is-navigate-mode) {
+		> .block-editor-block-list__block-edit::before {
+			// Use opacity to work in various editor styles.
+			border-color: $border-color;
+
+			.is-dark-theme & {
+				border-color: $light-opacity-light-800;
+			}
+		}
+
+		> .block-editor-block-list__block-edit::before {
+			border-style: dashed;
+			border-width: $border-width;
+		}
 	}
 
 	// Reusable blocks clickthrough overlays.

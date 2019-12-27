@@ -423,11 +423,6 @@ function BlockListBlock( {
 	// If the block is selected and we're typing the block should not appear.
 	// Empty paragraph blocks should always show up as unselected.
 	const showEmptyBlockSideInserter = ! isNavigationMode && ( isSelected || isHovered || isLast ) && isEmptyDefaultBlock && isValid;
-	const shouldAppearSelected =
-		! isFocusMode &&
-		! showEmptyBlockSideInserter &&
-		isSelected &&
-		! isTypingWithinBlock;
 	const shouldAppearHovered =
 		! isFocusMode &&
 		! hasFixedToolbar &&
@@ -461,7 +456,7 @@ function BlockListBlock( {
 		'wp-block block-editor-block-list__block',
 		{
 			'has-warning': ! isValid || !! hasError || isUnregisteredBlock,
-			'is-selected': shouldAppearSelected,
+			'is-selected': isSelected,
 			'is-navigate-mode': isNavigationMode,
 			'is-multi-selected': isMultiSelected,
 			'is-hovered': shouldAppearHovered,
