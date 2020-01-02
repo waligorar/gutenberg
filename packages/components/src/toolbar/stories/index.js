@@ -48,7 +48,6 @@ export const _default = () => {
 				/>
 			</ToolbarGroup>
 			<ToolbarGroup
-				hasArrowIndicator={ false }
 				icon="ellipsis"
 				label="Change text alignment"
 				isCollapsed

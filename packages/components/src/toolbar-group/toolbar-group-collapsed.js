@@ -27,7 +27,6 @@ function ToolbarGroupCollapsed( {
 
 	const renderDropdownMenu = ( toggleProps ) => (
 		<DropdownMenu
-			hasArrowIndicator
 			icon={ icon }
 			label={ label }
 			controls={ controls }
