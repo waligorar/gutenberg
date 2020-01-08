@@ -10,9 +10,10 @@
 	transition: border-color 0.1s linear, box-shadow 0.1s linear;
 	@include reduce-motion("transition");
 
-	// Show a border around the entire block toolbar.
+	// Block UI appearance.
 	border: $border-width solid $border-color;
-	border-radius: $border-radius-ui;
+	border-radius: $radius-block-ui;
+	background-color: $white;
 
 	@include break-small() {
 		// Allow overflow on desktop.
