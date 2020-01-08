@@ -43,7 +43,6 @@ const MediaReplaceFlow = (
 		name = __( 'Replace' ),
 	}
 ) => {
-	const [ showURLInput, setShowURLInput ] = useState( false );
 	const [ showEditURLInput, setShowEditURLInput ] = useState( false );
 	const [ mediaURLValue, setMediaURLValue ] = useState( mediaURL );
 	const mediaUpload = useSelect( ( select ) => {
@@ -174,15 +173,9 @@ const MediaReplaceFlow = (
 								} }
 							/>
 						</MediaUploadCheck>
-						{ onSelectURL && <MenuItem
-							icon="admin-links"
-							onClick={ () => ( setShowURLInput( ! showURLInput ) ) }
-							aria-expanded={ showURLInput }
-						>
-							<div> { __( 'Insert from URL' ) } </div>
-						</MenuItem> }
 					</NavigableMenu>
-					{ showURLInput && <div className="block-editor-media-flow__url-input">
+					{ onSelectURL && <div className="block-editor-media-flow__url-input">
+						<span className="block-editor-media-replace-flow__image-url-label">{ __( ' Current media URL:' ) }</span>
 						{ urlInputUIContent }
 					</div> }
 				</>
