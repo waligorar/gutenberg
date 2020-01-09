@@ -102,15 +102,11 @@
 			}
 
 			&::after {
-				border-color: rgba(255, 255, 255, 0);
-				border-bottom-color: #fff;
 				border-width: 10px;
 				margin-left: -10px;
 			}
 
 			&::before {
-				border-color: rgba(226, 228, 231, 0);
-				border-bottom-color: #e2e4e7;
 				border-width: 11px;
 				margin-left: -11px;
 			}
@@ -167,27 +163,46 @@
 	}
 }
 
-.is-style-dark > ul > li > ul {
-	background: #333;
-	border: 1px solid #111;
+// Colors.
+.wp-block-navigation {
+	// Sub-menus Flyout.
+	ul > li > ul {
+		&::after {
+			border-color: rgba(255, 255, 255, 0);
+			border-bottom-color: #fff;
+		}
 
-	a {
-		text-decoration: none;
-		color: #fff;
-
-		&:hover {
-			text-decoration: underline;
-			color: #eee;
+		&::before {
+			border-color: rgba(226, 228, 231, 0);
+			border-bottom-color: #e2e4e7;
+			border-width: 11px;
+			margin-left: -11px;
 		}
 	}
 
-	&::after {
-		border-color: rgba(51, 51, 51, 0);
-		border-bottom-color: #333;
-	}
+	// Dark Style support.
+	&.is-style-dark > ul > li > ul {
+		background: #333;
+		border: 1px solid #111;
 
-	&::before {
-		border-color: rgba(17, 17, 17, 0);
-		border-bottom-color: #111;
+		a {
+			text-decoration: none;
+			color: #fff;
+
+			&:hover {
+				text-decoration: underline;
+				color: #eee;
+			}
+		}
+
+		&::after {
+			border-color: rgba(51, 51, 51, 0);
+			border-bottom-color: #333;
+		}
+
+		&::before {
+			border-color: rgba(17, 17, 17, 0);
+			border-bottom-color: #111;
+		}
 	}
 }
