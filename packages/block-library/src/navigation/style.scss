@@ -59,12 +59,12 @@
 
 		// Sub-menus Flyout
 		& > li > ul {
-			background: #fff;
 			-webkit-box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
 			-moz-box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
 			border-radius: 3px;
 			box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
-			border: 1px solid #e2e4e7;
+			border-width: 1px;
+			border-style: solid;
 			margin: 0;
 			position: absolute;
 			left: 0;
@@ -89,6 +89,7 @@
 				}
 			}
 
+			// Sub menu arrow.
 			&::after,
 			&::before {
 				bottom: 100%;
@@ -161,46 +162,53 @@
 	&.items-justified-right > ul {
 		justify-content: flex-end;
 	}
-}
 
-// Colors.
-.wp-block-navigation {
-	// Sub-menus Flyout.
-	ul > li > ul {
+	// Colors.
+	$sub-menu-background-color: #fff;
+	$sub-menu-border-color: #e2e4e7;
+
+	$dark-mode-sub-menu-background-color: #333;
+	$dark-mode-sub-menu-border-color: #111;
+	$dark-mode-sub-menu-text-color: #fff;
+	$dark-mode-sub-menu-text-color-hover: #eee;
+
+	// Default Style.
+	& > ul > li > ul {
+		background-color: $sub-menu-background-color;
+		border-color: $sub-menu-border-color;
+
+		// Sub menu arrow - background color.
 		&::after {
-			border-color: rgba(255, 255, 255, 0);
-			border-bottom-color: #fff;
+			border-color: transparent;
+			border-bottom-color: $sub-menu-background-color;
 		}
 
+		// Sub menu arrow - border color.
 		&::before {
-			border-color: rgba(226, 228, 231, 0);
-			border-bottom-color: #e2e4e7;
-			border-width: 11px;
-			margin-left: -11px;
+			border-color: transparent;
+			border-bottom-color: $sub-menu-border-color;
 		}
 	}
 
-	// Dark Style support.
+	// Dark Style.
 	&.is-style-dark > ul > li > ul {
-		background: #333;
-		border: 1px solid #111;
+		background-color: $dark-mode-sub-menu-background-color;
+		border-color: $dark-mode-sub-menu-border-color;
 
 		a {
-			color: #fff;
+			color: $dark-mode-sub-menu-text-color;
 
 			&:hover {
-				color: #eee;
+				color: $dark-mode-sub-menu-text-color-hover;
 			}
 		}
 
 		&::after {
-			border-color: rgba(51, 51, 51, 0);
-			border-bottom-color: #333;
+			border-bottom-color: $dark-mode-sub-menu-background-color;
 		}
 
 		&::before {
-			border-color: rgba(17, 17, 17, 0);
-			border-bottom-color: #111;
+			border-bottom-color: $dark-mode-sub-menu-border-color;
 		}
 	}
 }
