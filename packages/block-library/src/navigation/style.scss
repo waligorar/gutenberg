@@ -107,6 +107,7 @@
 			&::after {
 				border-width: $sub-menu-arrow-width / 2;
 				margin-left: -( $sub-menu-arrow-width / 2 );
+				bottom: calc( 100% - 1px ) ;
 			}
 
 			// Sub menu arrow. Border.
