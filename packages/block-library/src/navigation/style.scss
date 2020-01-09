@@ -90,6 +90,7 @@
 			}
 
 			// Sub menu arrow.
+			$sub-menu-arrow-width: 20px;
 			&::after,
 			&::before {
 				bottom: 100%;
@@ -102,14 +103,16 @@
 				pointer-events: none;
 			}
 
+			// Sub menu arrow. Background.
 			&::after {
-				border-width: 10px;
-				margin-left: -10px;
+				border-width: $sub-menu-arrow-width / 2;
+				margin-left: -( $sub-menu-arrow-width / 2 );
 			}
 
+			// Sub menu arrow. Border.
 			&::before {
-				border-width: 11px;
-				margin-left: -11px;
+				border-width: $sub-menu-arrow-width / 2 + 1px;
+				margin-left: -( $sub-menu-arrow-width / 2 + 1px );
 			}
 
 			ul {
@@ -203,10 +206,12 @@
 			}
 		}
 
+		// Sub menu arrow - background color.
 		&::after {
 			border-bottom-color: $dark-mode-sub-menu-background-color;
 		}
 
+		// Sub menu arrow - border color.
 		&::before {
 			border-bottom-color: $dark-mode-sub-menu-border-color;
 		}
