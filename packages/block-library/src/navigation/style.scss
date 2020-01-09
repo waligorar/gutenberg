@@ -66,6 +66,7 @@
 			border-width: 1px;
 			border-style: solid;
 			margin: 0;
+			padding: 0;
 			position: absolute;
 			left: 0;
 			top: 80%;
@@ -74,11 +75,9 @@
 			transition: opacity 0.15s linear, transform 0.15s linear, right 0s 0.15s;
 			transform: translateY(0.6rem);
 			visibility: hidden;
-			padding: 5px 0;
-
 
 			li {
-				margin: 2px 8px;
+				margin: 0;
 			}
 
 			a {
@@ -140,6 +139,14 @@
 		li a {
 			padding-top: 8px;
 			padding-bottom: 8px;
+
+			&:first-child {
+				padding-top: 13px;
+			}
+
+			&:last-child {
+				padding-bottom: 13px;
+			}
 		}
 	}
 
@@ -195,7 +202,7 @@
 	}
 
 	// Dark Style.
-	&.is-style-dark > ul > li > ul {
+	&.is-style-dark:not(.has-background-color) > ul > li > ul {
 		background-color: $dark-mode-sub-menu-background-color;
 		border-color: $dark-mode-sub-menu-border-color;
 
