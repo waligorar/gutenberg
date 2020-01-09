@@ -13,7 +13,7 @@ import { UP, DOWN, ENTER } from '@wordpress/keycodes';
  * Internal dependencies
  */
 import LinkControl from '../index';
-import { fauxEntitySuggestions, fetchFauxEntitySuggestions } from './fixtures';
+import { fauxEntitySuggestions, fetchFauxEntitySuggestions, fauxInitialSuggestions } from './fixtures';
 
 /**
  * Wait for next tick of event loop. This is required
@@ -306,6 +306,36 @@ describe( 'Manual link entry', () => {
 			expect( firstSearchResultItemHTML ).toEqual( expect.stringContaining( searchType ) );
 			expect( firstSearchResultItemHTML ).toEqual( expect.stringContaining( 'Press ENTER to add this link' ) );
 		} );
+	} );
+} );
+
+describe( 'Default search suggestions', () => {
+	it( 'should display a list of initial search suggestions if provided', async () => {
+		const searchSuggestionsSpy = jest.fn();
+		const expectedResultsLength = fauxInitialSuggestions.length;
+
+		act( () => {
+			render(
+				<LinkControl
+					fetchSearchSuggestions={ searchSuggestionsSpy }
+					initialSuggestions={ () => Promise.resolve( fauxInitialSuggestions ) }
+				/>, container
+			);
+		} );
+
+		await eventLoopTick();
+
+		// Search Input UI
+		const searchInput = container.querySelector( 'input[aria-label="URL"]' );
+
+		// TODO: select these by aria relationship to autocomplete rather than arbitary selector.
+		const initialSearchResultElements = container.querySelectorAll( '[role="listbox"] [role="option"]' );
+
+		expect( searchSuggestionsSpy ).not.toHaveBeenCalled(); // verify no search has occured
+		expect( searchInput.value ).toBe( '' ); // verify no search has occured
+
+		// Verify the search results already display the initial suggestions
+		expect( initialSearchResultElements ).toHaveLength( expectedResultsLength );
 	} );
 } );
 
