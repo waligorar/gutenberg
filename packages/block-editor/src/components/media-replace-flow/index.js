@@ -175,7 +175,7 @@ const MediaReplaceFlow = (
 						</MediaUploadCheck>
 					</NavigableMenu>
 					{ onSelectURL && <div className="block-editor-media-flow__url-input">
-						<span className="block-editor-media-replace-flow__image-url-label">{ __( ' Current media URL:' ) }</span>
+						<span className="block-editor-media-replace-flow__image-url-label">{ __( 'Current media URL:' ) }</span>
 						{ urlInputUIContent }
 					</div> }
 				</>
