@@ -406,7 +406,7 @@
 	justify-content: center;
 
 	// Show a clickable plus.
-	.block-editor-inserter__toggle {
+	.block-editor-inserter__toggle.components-button {
 		border-radius: 50%;
 		color: $blue-medium-focus;
 		background: $white;
