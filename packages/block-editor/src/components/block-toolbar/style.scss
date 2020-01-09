@@ -24,17 +24,20 @@
 	.components-toolbar {
 		border: 0;
 
-		// Add a right border to show as separator in the block toolbar.
-		border-right: $border-width solid $border-color;
+		// Add a border before item groups to show as separator in the block toolbar.
+		// Why not a border after item groups? Because the last item is an invisible inserter,
+		// so we can't use last-child to consistenly hide it, and we need round corners.
+		border-left: $border-width solid $border-color;
 
 		// IE11 has thick paddings without this.
 		line-height: 0;
 
 	}
 
-	// Remove the right-border on the last item in the toolbar.
-	> :last-child {
-		border-right: none;
+	// Remove the left-border on the last item in the toolbar.
+	> .components-toolbar:first-child,
+	> :first-child > .components-toolbar {
+		border-left: none;
 	}
 
 	// Add a left border and adjust the color for Top Toolbar mode.
@@ -46,15 +49,18 @@
 			border-color: $light-gray-500;
 		}
 	}
+}
 
-	&__inserter {
-		opacity: 0;
-		pointer-events: none;
+// Inserter in the toolbar for tabbing into.
+.block-editor-block-toolbar__inserter {
+	opacity: 0;
+	pointer-events: none;
+	width: 0;
 
-		&.is-visible {
-			opacity: 1;
-			pointer-events: all;
-		}
+	&.is-visible {
+		width: auto;
+		opacity: 1;
+		pointer-events: all;
 	}
 }
 
