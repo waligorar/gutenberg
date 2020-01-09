@@ -114,8 +114,16 @@ function render_block_navigation( $attributes, $content, $block ) {
 		'<nav %1$s %2$s>%3$s</nav>',
 		$class_attribute,
 		$style_attribute,
-		build_navigation_html( $block, $colors, $font_sizes )
+		build_navigation_html( $block, $colors, $font_sizes, $attributes )
 	);
+}
+
+function get_text_color_inline_style( $attrs ) {
+	if ( ! array_key_exists( 'customTextColor', $attrs ) ) {
+		return '';
+	}
+
+	return sprintf( ' style="color: %s;"', $attrs['customTextColor'] );
 }
 
 /**
@@ -127,7 +135,7 @@ function render_block_navigation( $attributes, $content, $block ) {
  *
  * @return string Returns  an HTML list from innerBlocks.
  */
-function build_navigation_html( $block, $colors, $font_sizes ) {
+function build_navigation_html( $block, $colors, $font_sizes, $attributes ) {
 	$html            = '';
 	$classes         = array_merge(
 		$colors['css_classes'],
@@ -142,7 +150,7 @@ function build_navigation_html( $block, $colors, $font_sizes ) {
 	foreach ( (array) $block['innerBlocks'] as $key => $block ) {
 
 		$html .= '<li class="wp-block-navigation-link">' .
-			'<a' . $class_attribute . $style_attribute;
+			'<a' . get_text_color_inline_style( $attributes );
 
 		// Start appending HTML attributes to anchor tag.
 		if ( isset( $block['attrs']['url'] ) ) {
@@ -184,7 +192,7 @@ function build_navigation_html( $block, $colors, $font_sizes ) {
 		// End anchor tag content.
 
 		if ( count( (array) $block['innerBlocks'] ) > 0 ) {
-			$html .= build_navigation_html( $block, $colors, $font_sizes );
+			$html .= build_navigation_html( $block, $colors, $font_sizes, $attributes );
 		}
 
 		$html .= '</li>';

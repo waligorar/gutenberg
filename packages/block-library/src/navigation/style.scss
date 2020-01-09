@@ -183,8 +183,9 @@
 	$dark-mode-sub-menu-text-color: #fff;
 	$dark-mode-sub-menu-text-color-hover: #eee;
 
-	// Default Style.
-	& > ul > li > ul {
+	// Default Style / Ligth style.	
+	& > ul > li > ul,
+	&.is-light-style > ul > li > ul {
 		background-color: $sub-menu-background-color;
 		border-color: $sub-menu-border-color;
 
@@ -202,7 +203,7 @@
 	}
 
 	// Dark Style.
-	&.is-style-dark:not(.has-background-color) > ul > li > ul {
+	&.is-style-dark > ul > li > ul {
 		background-color: $dark-mode-sub-menu-background-color;
 		border-color: $dark-mode-sub-menu-border-color;
 
