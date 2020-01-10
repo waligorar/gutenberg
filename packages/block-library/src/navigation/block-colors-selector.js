@@ -91,7 +91,7 @@ const renderContent = ( {
 			<ContrastChecker
 				textColor={ textColor }
 				backgroundColor={ backgroundColor }
-				isLargeText={ false }
+				isLargeText={ true }
 			/>
 		</>
 	);

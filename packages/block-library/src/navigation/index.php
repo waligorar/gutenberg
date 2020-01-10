@@ -139,10 +139,6 @@ function build_navigation_html( $block, $colors, $font_sizes, $attributes ) {
 		? sprintf( ' style="%s"', esc_attr( $colors['inline_styles'] ) . esc_attr( $font_sizes['inline_styles'] ) )
 		: '';
 
-	$text_color_inline_style = array_key_exists( 'customTextColor', $attrs )
-		? sprintf( ' style="color: %s;"', $attrs['customTextColor'] )
-		: '';
-
 	foreach ( (array) $block['innerBlocks'] as $key => $block ) {
 
 		$html .= '<li class="wp-block-navigation-link">' .
