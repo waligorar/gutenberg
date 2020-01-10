@@ -118,14 +118,6 @@ function render_block_navigation( $attributes, $content, $block ) {
 	);
 }
 
-function get_text_color_inline_style( $attrs ) {
-	if ( ! array_key_exists( 'customTextColor', $attrs ) ) {
-		return '';
-	}
-
-	return sprintf( ' style="color: %s;"', $attrs['customTextColor'] );
-}
-
 /**
  * Walks the inner block structure and returns an HTML list for it.
  *
@@ -147,10 +139,14 @@ function build_navigation_html( $block, $colors, $font_sizes, $attributes ) {
 		? sprintf( ' style="%s"', esc_attr( $colors['inline_styles'] ) . esc_attr( $font_sizes['inline_styles'] ) )
 		: '';
 
+	$text_color_inline_style = array_key_exists( 'customTextColor', $attrs )
+		? sprintf( ' style="color: %s;"', $attrs['customTextColor'] )
+		: '';
+
 	foreach ( (array) $block['innerBlocks'] as $key => $block ) {
 
 		$html .= '<li class="wp-block-navigation-link">' .
-			'<a' . get_text_color_inline_style( $attributes );
+			'<a';
 
 		// Start appending HTML attributes to anchor tag.
 		if ( isset( $block['attrs']['url'] ) ) {

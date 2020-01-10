@@ -177,6 +177,8 @@
 	// Colors.
 	$sub-menu-background-color: #fff;
 	$sub-menu-border-color: #e2e4e7;
+	$sub-menu-text-color: #111;
+	$sub-menu-text-color-hover: #333;
 
 	$dark-mode-sub-menu-background-color: #333;
 	$dark-mode-sub-menu-border-color: #111;
@@ -188,6 +190,14 @@
 	&.is-light-style > ul > li > ul {
 		background-color: $sub-menu-background-color;
 		border-color: $sub-menu-border-color;
+
+		a {
+			color: $sub-menu-text-color;
+
+			&:hover {
+				color: $sub-menu-text-color-hover;
+			}
+		}
 
 		// Sub menu arrow - background color.
 		&::after {
