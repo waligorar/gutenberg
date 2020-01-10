@@ -114,7 +114,7 @@ function render_block_navigation( $attributes, $content, $block ) {
 		'<nav %1$s %2$s>%3$s</nav>',
 		$class_attribute,
 		$style_attribute,
-		build_navigation_html( $block, $colors, $font_sizes, $attributes )
+		build_navigation_html( $block, $colors, $font_sizes )
 	);
 }
 
@@ -127,7 +127,7 @@ function render_block_navigation( $attributes, $content, $block ) {
  *
  * @return string Returns  an HTML list from innerBlocks.
  */
-function build_navigation_html( $block, $colors, $font_sizes, $attributes ) {
+function build_navigation_html( $block, $colors, $font_sizes ) {
 	$html            = '';
 	$classes         = array_merge(
 		$colors['css_classes'],
@@ -184,7 +184,7 @@ function build_navigation_html( $block, $colors, $font_sizes, $attributes ) {
 		// End anchor tag content.
 
 		if ( count( (array) $block['innerBlocks'] ) > 0 ) {
-			$html .= build_navigation_html( $block, $colors, $font_sizes, $attributes );
+			$html .= build_navigation_html( $block, $colors, $font_sizes );
 		}
 
 		$html .= '</li>';
