@@ -89,7 +89,7 @@
 			}
 
 			// Sub menu arrow.
-			$sub-menu-arrow-width: 20px;
+			$light-style-sub-menu-arrow-width: 20px;
 			&::after,
 			&::before {
 				bottom: 100%;
@@ -104,15 +104,15 @@
 
 			// Sub menu arrow. Background.
 			&::after {
-				border-width: $sub-menu-arrow-width / 2;
-				margin-left: -( $sub-menu-arrow-width / 2 );
+				border-width: $light-style-sub-menu-arrow-width / 2;
+				margin-left: -( $light-style-sub-menu-arrow-width / 2 );
 				bottom: calc( 100% - 1px ) ;
 			}
 
 			// Sub menu arrow. Border.
 			&::before {
-				border-width: $sub-menu-arrow-width / 2 + 1px;
-				margin-left: -( $sub-menu-arrow-width / 2 + 1px );
+				border-width: $light-style-sub-menu-arrow-width / 2 + 1px;
+				margin-left: -( $light-style-sub-menu-arrow-width / 2 + 1px );
 			}
 
 			ul {
@@ -175,64 +175,64 @@
 	}
 
 	// Colors.
-	$sub-menu-background-color: #fff;
-	$sub-menu-border-color: #e2e4e7;
-	$sub-menu-text-color: #111;
-	$sub-menu-text-color-hover: #333;
+	$light-style-sub-menu-background-color: #fff;
+	$light-style-sub-menu-border-color: #e2e4e7;
+	$light-style-sub-menu-text-color: #111;
+	$light-style-sub-menu-text-color-hover: #333;
 
-	$dark-mode-sub-menu-background-color: #333;
-	$dark-mode-sub-menu-border-color: #111;
-	$dark-mode-sub-menu-text-color: #fff;
-	$dark-mode-sub-menu-text-color-hover: #eee;
+	$dark-style-sub-menu-background-color: #333;
+	$dark-style-sub-menu-border-color: #111;
+	$dark-style-sub-menu-text-color: #fff;
+	$dark-style-sub-menu-text-color-hover: #eee;
 
 	// Default Style / Ligth style.	
 	& > ul > li > ul,
 	&.is-light-style > ul > li > ul {
-		background-color: $sub-menu-background-color;
-		border-color: $sub-menu-border-color;
+		background-color: $light-style-sub-menu-background-color;
+		border-color: $light-style-sub-menu-border-color;
 
 		a {
-			color: $sub-menu-text-color;
+			color: $light-style-sub-menu-text-color;
 
 			&:hover {
-				color: $sub-menu-text-color-hover;
+				color: $light-style-sub-menu-text-color-hover;
 			}
 		}
 
 		// Sub menu arrow - background color.
 		&::after {
 			border-color: transparent;
-			border-bottom-color: $sub-menu-background-color;
+			border-bottom-color: $light-style-sub-menu-background-color;
 		}
 
 		// Sub menu arrow - border color.
 		&::before {
 			border-color: transparent;
-			border-bottom-color: $sub-menu-border-color;
+			border-bottom-color: $light-style-sub-menu-border-color;
 		}
 	}
 
 	// Dark Style.
 	&.is-style-dark > ul > li > ul {
-		background-color: $dark-mode-sub-menu-background-color;
-		border-color: $dark-mode-sub-menu-border-color;
+		background-color: $dark-style-sub-menu-background-color;
+		border-color: $dark-style-sub-menu-border-color;
 
 		a {
-			color: $dark-mode-sub-menu-text-color;
+			color: $dark-style-sub-menu-text-color;
 
 			&:hover {
-				color: $dark-mode-sub-menu-text-color-hover;
+				color: $dark-style-sub-menu-text-color-hover;
 			}
 		}
 
 		// Sub menu arrow - background color.
 		&::after {
-			border-bottom-color: $dark-mode-sub-menu-background-color;
+			border-bottom-color: $dark-style-sub-menu-background-color;
 		}
 
 		// Sub menu arrow - border color.
 		&::before {
-			border-bottom-color: $dark-mode-sub-menu-border-color;
+			border-bottom-color: $dark-style-sub-menu-border-color;
 		}
 	}
 }
