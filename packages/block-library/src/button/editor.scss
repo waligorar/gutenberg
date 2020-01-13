@@ -74,6 +74,6 @@
 }
 
 // Display "table" is used because the button container should only wrap the content and not takes the full width.
-div[data-type="core/button"] div[data-block] {
+div[data-type="core/button"] {
 	display: table;
 }
