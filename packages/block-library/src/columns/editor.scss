@@ -52,6 +52,10 @@
 			margin-left: -$block-padding;
 			margin-right: -$block-padding;
 
+			// Zero out margins.
+			margin-top: 0;
+			margin-bottom: 0;
+
 			// Prevent the columns from growing wider than their distributed sizes.
 			min-width: 0;
 
@@ -95,7 +99,7 @@
 			// The Columns block is a flex-container, therefore it nullifies margin collapsing.
 			// Therefore, blocks inside this will appear to create a double margin.
 			// We compensate for this using negative margins.
-			> div > .block-core-columns > .block-editor-inner-blocks {
+			> .block-core-columns > .block-editor-inner-blocks {
 				margin-top: -$default-block-margin;
 				margin-bottom: -$default-block-margin;
 			}
