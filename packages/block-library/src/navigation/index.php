@@ -35,17 +35,17 @@ function build_css_colors( $attributes ) {
 		// Add the custom color inline style.
 		$colors['inline_styles'] = sprintf( 'color: %s;', $attributes['customTextColor'] );
 	}
-	
+
 	// Background color.
 	$has_named_background_color  = array_key_exists( 'backgroundColor', $attributes );
 	$has_custom_background_color = array_key_exists( 'customBackgroundColor', $attributes );
-	
+
 	// If has background color.
 	if ( $has_custom_background_color || $has_named_background_color ) {
 		// Add has-background-color class.
 		$colors['css_classes'][] = 'has-background-color';
 	}
-	
+
 	if ( $has_named_background_color ) {
 		// Add the background-color class.
 		$colors['css_classes'][] = sprintf( 'has-%s-background-color', $attributes['backgroundColor'] );
@@ -128,17 +128,7 @@ function render_block_navigation( $attributes, $content, $block ) {
  * @return string Returns  an HTML list from innerBlocks.
  */
 function build_navigation_html( $block, $colors, $font_sizes ) {
-	$html            = '';
-	$classes         = array_merge(
-		$colors['css_classes'],
-		$font_sizes['css_classes']
-	);
-	$css_classes     = implode( ' ', $classes );
-	$class_attribute = sprintf( ' class="wp-block-navigation-link__content %s"', esc_attr( trim( $css_classes ) ) );
-	$style_attribute = ( $colors['inline_styles'] || $font_sizes['inline_styles'] )
-		? sprintf( ' style="%s"', esc_attr( $colors['inline_styles'] ) . esc_attr( $font_sizes['inline_styles'] ) )
-		: '';
-
+	$html        = '';
 	foreach ( (array) $block['innerBlocks'] as $key => $block ) {
 
 		$html .= '<li class="wp-block-navigation-link">' .
@@ -204,28 +194,28 @@ function register_block_core_navigation() {
 		'core/navigation',
 		array(
 			'attributes'      => array(
-				'className'          => array(
+				'className'             => array(
 					'type' => 'string',
 				),
-				'textColor'          => array(
+				'textColor'             => array(
 					'type' => 'string',
 				),
-				'customTextColor'    => array(
+				'customTextColor'       => array(
 					'type' => 'string',
 				),
-				'backgroundColor'          => array(
+				'backgroundColor'       => array(
 					'type' => 'string',
 				),
-				'customBackgroundColor'    => array(
+				'customBackgroundColor' => array(
 					'type' => 'string',
 				),
-				'fontSize'           => array(
+				'fontSize'             => array(
 					'type' => 'string',
 				),
-				'customFontSize'     => array(
+				'customFontSize'       => array(
 					'type' => 'number',
 				),
-				'itemsJustification' => array(
+				'itemsJustification'   => array(
 					'type' => 'string',
 				),
 			),
