@@ -128,6 +128,7 @@ function BlockPopover( {
 			__unstableAllowVerticalSubpixelPosition={ moverDirection !== 'horizontal' && node }
 			__unstableAllowHorizontalSubpixelPosition={ moverDirection === 'horizontal' && node }
 			onBlur={ () => setIsToolbarForced( false ) }
+			shouldAnchorIncludePadding
 		>
 			{ ( shouldShowContextualToolbar || isToolbarForced ) && (
 				<div

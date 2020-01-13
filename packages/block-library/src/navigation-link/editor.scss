@@ -81,7 +81,7 @@
 
 [data-type="core/navigation-link"] {
 	.block-editor-block-toolbar {
-		left: $block-padding;
+		left: $grid-size - $block-side-ui-clearance;
 	}
 }
 
